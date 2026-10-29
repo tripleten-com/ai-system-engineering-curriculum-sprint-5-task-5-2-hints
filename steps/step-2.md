@@ -25,25 +25,25 @@ One practical constraint shapes the code: the worker image doesn't install the Y
 
 ### You can't decide on a script format
 
-<details><summary>Move 1</summary>
+<details><summary>Hint 1</summary>
 
 List the four requirements: one file per script, an ordered list of entries, the proposal's own field names, and a way for a reader to tell what the script plays.
 
 </details>
 
-<details><summary>Move 2</summary>
+<details><summary>Hint 2</summary>
 
 Which file formats does the repository already read? Using one of them means no new parser, and your entries can be read straight into the proposal type.
 
 </details>
 
-<details><summary>Move 3</summary>
+<details><summary>Hint 3</summary>
 
 How does a request point at a file? Decide how a script's name maps to a file name, so the request's script field is enough to find it.
 
 </details>
 
-<details><summary>Move 4</summary>
+<details><summary>Hint 4</summary>
 
 The approach: one file per script, named after the script, holding a short description of what it plays and a list of entries. Each entry uses exactly the proposal's field names. The run-out behavior goes in a comment at the top.
 
@@ -51,25 +51,25 @@ The approach: one file per script, named after the script, holding a short descr
 
 ### The worker container won't start after your change
 
-<details><summary>Move 1</summary>
+<details><summary>Hint 1</summary>
 
 Did the stack fail before your tests ran? Read the worker's log with `poe runtime-logs`.
 
 </details>
 
-<details><summary>Move 2</summary>
+<details><summary>Hint 2</summary>
 
 Which libraries does the worker image install? Compare the worker's dependency group in `pyproject.toml` with what your new code imports.
 
 </details>
 
-<details><summary>Move 3</summary>
+<details><summary>Hint 3</summary>
 
 Where in the file is the import? Code at the top of a module runs when the module is imported, which happens when the worker starts.
 
 </details>
 
-<details><summary>Move 4</summary>
+<details><summary>Hint 4</summary>
 
 The approach: import the parser inside the function that reads a script, not at the top of the module. The worker never reads scripts, so it never runs that import.
 
@@ -77,19 +77,19 @@ The approach: import the parser inside the function that reads a script, not at 
 
 ### The emulator can't find your scripts
 
-<details><summary>Move 1</summary>
+<details><summary>Hint 1</summary>
 
 What folder is "here" when the code runs? Is it the same in your shell, in your tests and in a container?
 
 </details>
 
-<details><summary>Move 2</summary>
+<details><summary>Hint 2</summary>
 
 Build the default location from the module's own file position, not from the folder you happen to be in.
 
 </details>
 
-<details><summary>Move 3</summary>
+<details><summary>Hint 3</summary>
 
 Read `.dockerignore`. Does the image carry the folder where your scripts live? If not, the location has to be a setting a caller can change, with your default only for the shell and the tests.
 
@@ -97,19 +97,19 @@ Read `.dockerignore`. Does the image carry the folder where your scripts live? I
 
 ### A second caller gets the wrong entry
 
-<details><summary>Move 1</summary>
+<details><summary>Hint 1</summary>
 
 Does your adapter store anything between calls? Search it for a value that changes each time the method runs.
 
 </details>
 
-<details><summary>Move 2</summary>
+<details><summary>Hint 2</summary>
 
 Which field of the request already says which entry comes back?
 
 </details>
 
-<details><summary>Move 3</summary>
+<details><summary>Hint 3</summary>
 
 The approach: read the script and pick the entry at the request's position on every call, with nothing remembered on the adapter.
 
@@ -117,25 +117,25 @@ The approach: read the script and pick the entry at the request's position on ev
 
 ### You're writing your own validity checks for each entry
 
-<details><summary>Move 1</summary>
+<details><summary>Hint 1</summary>
 
 Which code already knows every rule a proposal must follow? What happens when you build a proposal that breaks one?
 
 </details>
 
-<details><summary>Move 2</summary>
+<details><summary>Hint 2</summary>
 
 If you check entries yourself, what happens the day someone changes a rule in the contract?
 
 </details>
 
-<details><summary>Move 3</summary>
+<details><summary>Hint 3</summary>
 
 What does a refusal report as its count, and does it carry a tool input? Decide once, and use the same values for every refusal.
 
 </details>
 
-<details><summary>Move 4</summary>
+<details><summary>Hint 4</summary>
 
 The approach: try to build the proposal from the entry exactly as written. If building it fails, return a refusal with the reason `malformed_proposal` and your chosen count. Never fix the entry and never read ahead.
 
@@ -143,19 +143,19 @@ The approach: try to build the proposal from the entry exactly as written. If bu
 
 ### The wrapper retries a missing script
 
-<details><summary>Move 1</summary>
+<details><summary>Hint 1</summary>
 
 How does the resilient wrapper decide whether an error deserves another attempt? Read how it treats the error types in `src/domain/errors.py`.
 
 </details>
 
-<details><summary>Move 2</summary>
+<details><summary>Hint 2</summary>
 
 Could a missing script fix itself on the next attempt? Which error type says "don't try again"?
 
 </details>
 
-<details><summary>Move 3</summary>
+<details><summary>Hint 3</summary>
 
 Raise that type, or one of your own that extends it, for a missing script and for a position past the end. The wrapper then passes it straight to the caller.
 
@@ -163,19 +163,19 @@ Raise that type, or one of your own that extends it, for a missing script and fo
 
 ### The emulator works on its own but not through the wrapper
 
-<details><summary>Move 1</summary>
+<details><summary>Hint 1</summary>
 
 Does the type checker name the wrapper? What does the wrapper do with a call it has no method for?
 
 </details>
 
-<details><summary>Move 2</summary>
+<details><summary>Hint 2</summary>
 
 Look at how the wrapper handles the summary call: it applies a timeout and retries around the inner adapter's call.
 
 </details>
 
-<details><summary>Move 3</summary>
+<details><summary>Hint 3</summary>
 
 The approach: give the wrapper its own proposal method that hands the request to the inner adapter under the same timeout and retry rules. The wrapper knows nothing about scripts.
 

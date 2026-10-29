@@ -22,25 +22,25 @@ The mistake belongs in a proposal's fields, not in the file. A file the parser c
 
 ### A malformed entry comes back as written
 
-<details><summary>Move 1</summary>
+<details><summary>Hint 1</summary>
 
 Is the entry actually malformed under your contract? Try building a proposal from exactly those fields in the shell.
 
 </details>
 
-<details><summary>Move 2</summary>
+<details><summary>Hint 2</summary>
 
 If building it succeeds, the entry breaks a rule your contract doesn't have. Which rules does your contract enforce? Your Task 1 tests list them.
 
 </details>
 
-<details><summary>Move 3</summary>
+<details><summary>Hint 3</summary>
 
 If building it fails but the emulator still returns the entry, go back to how the emulator handles a rejected entry in Step 2.
 
 </details>
 
-<details><summary>Move 4</summary>
+<details><summary>Hint 4</summary>
 
 Pick mistakes from the lesson's list that your contract enforces, such as an unknown kind, an input on a refusal, a tool call without input, a missing field or a negative count. Then confirm each one in the shell.
 
@@ -48,19 +48,19 @@ Pick mistakes from the lesson's list that your contract enforces, such as an unk
 
 ### The file won't load at all
 
-<details><summary>Move 1</summary>
+<details><summary>Hint 1</summary>
 
 Does the error come from the parser or from the contract? Read where the error is raised.
 
 </details>
 
-<details><summary>Move 2</summary>
+<details><summary>Hint 2</summary>
 
 Is the mistake in a proposal's fields, or in the file's syntax? A broken file tests whether the file can be read, not how Coldline handles a model's mistake.
 
 </details>
 
-<details><summary>Move 3</summary>
+<details><summary>Hint 3</summary>
 
 Keep the file valid and put each mistake inside one entry's fields.
 
@@ -68,19 +68,19 @@ Keep the file valid and put each mistake inside one entry's fields.
 
 ### You can't show the emulator recovers
 
-<details><summary>Move 1</summary>
+<details><summary>Hint 1</summary>
 
 What comes right after your last malformed entry?
 
 </details>
 
-<details><summary>Move 2</summary>
+<details><summary>Hint 2</summary>
 
 If the script ends on a mistake, what would show that the next call isn't stuck or skipped?
 
 </details>
 
-<details><summary>Move 3</summary>
+<details><summary>Hint 3</summary>
 
 Put a valid entry before the first mistake and another after the last, then walk every position in the shell and compare each one with the file.
 
@@ -88,19 +88,19 @@ Put a valid entry before the first mistake and another after the last, then walk
 
 ### A valid refusal looks just like a malformed one
 
-<details><summary>Move 1</summary>
+<details><summary>Hint 1</summary>
 
 What reason does your valid refusal give?
 
 </details>
 
-<details><summary>Move 2</summary>
+<details><summary>Hint 2</summary>
 
 If two refusals carry the same reason, can a reader tell which one the model chose and which one the emulator made?
 
 </details>
 
-<details><summary>Move 3</summary>
+<details><summary>Hint 3</summary>
 
 Give the valid refusal a reason in the model's own words, so `malformed_proposal` only ever means "the emulator couldn't read the answer".
 

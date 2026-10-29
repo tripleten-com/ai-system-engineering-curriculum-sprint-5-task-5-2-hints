@@ -22,25 +22,25 @@ The method follows the pattern of the summary call exactly: it's a coroutine, it
 
 ### You're not sure how to declare the call
 
-<details><summary>Move 1</summary>
+<details><summary>Hint 1</summary>
 
 Open `src/ports/model_provider.py` and read how `summarize()` is declared: its keyword, its parameters, its return type and its docstring.
 
 </details>
 
-<details><summary>Move 2</summary>
+<details><summary>Hint 2</summary>
 
 Where do the request and answer types for `summarize()` come from? Find the import at the top of the file.
 
 </details>
 
-<details><summary>Move 3</summary>
+<details><summary>Hint 3</summary>
 
 The new method follows the same pattern with the types you wrote in Task 1. Import them from the module where you put the contract.
 
 </details>
 
-<details><summary>Move 4</summary>
+<details><summary>Hint 4</summary>
 
 The approach: an async method named `propose` with one request parameter of your request type, returning your proposal type. Its body is just the docstring, like the existing one. Then update the class docstring so it no longer says the port answers one question.
 
@@ -48,19 +48,19 @@ The approach: an async method named `propose` with one request parameter of your
 
 ### `poe contract` fails and you don't know why
 
-<details><summary>Move 1</summary>
+<details><summary>Hint 1</summary>
 
 Which test failed: the one that counts ports, or the one that checks adapters? Read the test's name in the output.
 
 </details>
 
-<details><summary>Move 2</summary>
+<details><summary>Hint 2</summary>
 
 If it's the adapter test, ask what you just promised on the port that the emulator doesn't do yet.
 
 </details>
 
-<details><summary>Move 3</summary>
+<details><summary>Hint 3</summary>
 
 If it's the port-count test, did you define a new `Protocol` and export it from the `ports` package? Coldline must still have exactly five.
 
@@ -68,19 +68,19 @@ If it's the port-count test, did you define a new `Protocol` and export it from 
 
 ### You want the full list of what's missing
 
-<details><summary>Move 1</summary>
+<details><summary>Hint 1</summary>
 
 The adapter test names the emulator, not the method. Which command reads every place a model provider is used and checks it against the port?
 
 </details>
 
-<details><summary>Move 2</summary>
+<details><summary>Hint 2</summary>
 
 Run `poe typecheck` and read every line it prints. Note each class it names.
 
 </details>
 
-<details><summary>Move 3</summary>
+<details><summary>Hint 3</summary>
 
 For each class, ask whether it's an adapter that answers for itself, or one that wraps another adapter. Both need the method, but they implement it differently. You'll do both in Step 2.
 
@@ -88,19 +88,19 @@ For each class, ask whether it's an adapter that answers for itself, or one that
 
 ### You're tempted to start a new port for the agent
 
-<details><summary>Move 1</summary>
+<details><summary>Hint 1</summary>
 
 Will the agent and the worker talk to the same model? If they will, why would they need two promises about it?
 
 </details>
 
-<details><summary>Move 2</summary>
+<details><summary>Hint 2</summary>
 
 Would `poe contract` notice a second `Protocol` defined outside the `ports` package? If it wouldn't, who keeps the five-port rule?
 
 </details>
 
-<details><summary>Move 3</summary>
+<details><summary>Hint 3</summary>
 
 Keep one port with two methods. That's the rule in the lesson's Boundaries, and it's what lets the next model plug in once.
 
