@@ -90,7 +90,7 @@ The CI workflow file must stay exactly as the template supplied it. Compare your
 
 ## In this Task
 
-<details><summary>The `start` step fails after your change</summary>
+<details><summary>The <code>start</code> step fails after your change</summary>
 
 Did the worker container start? Read its log with `poe runtime-logs`. Which library does your new code import at the top of a module the worker loads, and does the worker's image install it?
 
